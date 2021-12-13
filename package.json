@@ -1,0 +1,44 @@
+{
+  "name": "hepsiburadaTask",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": ".",
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "react-test-renderer": "latest",
+    "axios": "0.18.0",
+    "body-parser": "1.18.2",
+    "express": "4.16.3",
+    "net": "1.0.2",
+    "react": "16.8.0",
+    "react-dom": "16.8.0",
+    "react-number-format": "3.0.2",
+    "react-redux": "5.0.7",
+    "react-scripts": "3.2.0",
+    "redux": "4.0.0",
+    "redux-thunk": "2.2.0",
+    "sockjs-client": "1.1.5",
+    "stompjs": "2.3.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "CI=false react-scripts build",
+    "test": "react-scripts test",
+    "test:ci": "react-scripts test --testResultsProcessor ./node_modules/jest-junit",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
