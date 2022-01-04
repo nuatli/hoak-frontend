@@ -3,14 +3,33 @@ import {login} from '../../api/apiCalls';
 import Input from '../Input';
 import {withTranslation} from 'react-i18next';
 import { t } from 'i18next';
+import axios from 'axios';
+import ButtonWithProgress from '../ButtonWithProgress';
 
 class Login extends React.Component{
     state={
         username:null,
         password:null,
         pendingApiCall:false,
-        errors:{}
+        errors:null
     };
+    
+    componentDidMount(){
+    	console.log('Login Page add to Screen');
+    	axios.interceptors.request.use(request => {
+    		this.setState({pendingApiCall:true});
+    		return request;
+    	});
+    	
+    	axios.interceptors.response.use((response) => {
+				this.setState({pendingApiCall:false});
+				return response;
+    		},(error) => {
+				this.setState({pendingApiCall:false});
+				throw error;
+    		});
+    	
+    }
 
     onChangeUsername = event =>{
        this.setState({username:event.target.value});
@@ -24,43 +43,39 @@ class Login extends React.Component{
     
     onChange = event => {
 		const {name,value}=event.target; 
-		const errors ={...this.state.errors};
-		errors[name] = undefined
-		if(name === 'password'|| name === 'passwordRepeat'){
-			if(name === 'password' && value !== this.state.passwordRepeat){
-				errors.passwordRepeat = t("Password Mismatch");
-			}else if(name === 'passwordRepeat' && value !== this.state.password){
-				errors.passwordRepeat = t("Password Mismatch");
-			}else{
-				errors.passwordRepeat = undefined;
-			}					
-		}
-        this.setState({[name]:value,errors});
+        this.setState({[name]:value,errors:null});
     } 
     
 	
-    onClickLogin = event => {
+    onClickLogin = async event => {
     	event.preventDefault();
     	const {username,password}=this.state;
     	const creds = {username,password};//const creds= {username:username,password:paswword};
-    	login(creds);
+    	this.setState({errors:null});
+    	try{
+    		await login(creds);
+    	}catch(apiError){
+    		this.setState({errors:apiError.response.data.message});
+    	}
+    	
     }
     
     render(){
-    	const {pendingApiCall,errors} = this.state;
-    	const {username,password} = errors;
+    	const {errors,username,password,pendingApiCall} = this.state;
+    	const buttonEnabled = username && password;
+    	console.log(pendingApiCall)
         return(
         	<div className="container">
 	            <form>
 	                <h1 className="text-center">{t('Login')}</h1>
-					<Input name="username" label={t("Username")} error={username}  onChange={this.onChange} />
-					<Input name="password" label={t("Password")} type="password" error={password}  onChange={this.onChange} />
-	                <div className="text-center">
-	                	<button className="btn btn-primary" onClick={this.onClickLogin} disabled={pendingApiCall}>
-	                		{pendingApiCall && <span className="spinner-border spinner-border-sm" ></span> }
-	                		{t('Login')}
-	                	</button>
-	                </div>
+					<Input name="username" label={t("Username")}   onChange={this.onChange} />
+					<Input name="password" label={t("Password")} type="password" onChange={this.onChange} />
+	                {errors && 
+						<div className="alert alert-danger" >
+							{errors}
+						</div>	
+	                }
+					<ButtonWithProgress onClick={this.onClickLogin} disabled={!buttonEnabled || pendingApiCall} text={t('Login')} pendingApiCall={pendingApiCall}/>
 	            </form>
             </div>
         )

@@ -21,7 +21,7 @@ ReactDOM.render(
 */
 ReactDOM.render(
 		<div>
-			<LoginPage />
+			<UserSignUpPage />
 			<LanguageSelector />
 		</div>
 		,document.getElementById("root")

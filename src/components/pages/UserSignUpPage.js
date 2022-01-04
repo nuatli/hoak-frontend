@@ -3,6 +3,8 @@ import {signup} from '../../api/apiCalls';
 import Input from '../Input';
 import {withTranslation} from 'react-i18next';
 import { t } from 'i18next';
+import ButtonWithProgress from '../ButtonWithProgress';
+
 
 
 class UserSignUpPage extends React.Component{
@@ -15,6 +17,8 @@ class UserSignUpPage extends React.Component{
         errors:{}
     };
 
+
+    
     onChangeUsername = event =>{
        this.setState({username:event.target.value});
         
@@ -96,13 +100,7 @@ class UserSignUpPage extends React.Component{
 					<Input name="displayName" label={t("Display Name")} error={displayName}  onChange={this.onChange} />
 					<Input name="password" label={t("Password")} type="password" error={password}  onChange={this.onChange} />
 					<Input name="passwordRepeat" label={t("Password Repeat")} type="password" error={passwordRepeat}  onChange={this.onChange} />
-	                <div className="text-center">
-	                	<button className="btn btn-primary" onClick={this.onClickSignUp} disabled={pendingApiCall || passwordRepeat !== undefined }>
-	                		{pendingApiCall && <span className="spinner-border spinner-border-sm" ></span> }
-	                		{this.props.t('Sign Up')}
-	                	</button>
-	                </div>
-
+					<ButtonWithProgress onClick={this.onClickSignUp} disabled={passwordRepeat !== undefined || pendingApiCall} text={t('Sign Up')} pendingApiCall={pendingApiCall}/>
 	            </form>
             </div>
         )
