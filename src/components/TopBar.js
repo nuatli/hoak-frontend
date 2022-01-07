@@ -8,8 +8,8 @@ class TopBar extends React.Component{
     
     
     render(){
-    	const {t} =this.props;
-    	const {isLoggedIn,username} =this.state;
+    	const {t,isLoggedIn,username,onLogoutSuccess} =this.props;
+    	const {} =this.state;
     	
     	let links = (
     		<ul className="navbar-nav ml-auto">
@@ -34,7 +34,9 @@ class TopBar extends React.Component{
 		    				{username}
 		    			</Link>
 					</li>
-					<li className="nav-link">{t('Logout')}</li>
+					<li className="nav-link" onClick={onLogoutSuccess} style={{cursor:'pointer'}}>{
+						t('Logout')}
+					</li>
 				</ul>
     		)
     	}

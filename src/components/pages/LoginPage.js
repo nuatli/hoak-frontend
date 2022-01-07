@@ -33,12 +33,13 @@ class Login extends React.Component{
     onClickLogin = async event => {
     	event.preventDefault()
     	const {username,password}=this.state;
-    	const {history}=this.props;
+    	const {onLoginSuccess,history}=this.props;
     	const creds = {username,password};//const creds= {username:username,password:paswword};
     	this.setState({errors:null});
     	try{
     		await login(creds);
     		history.push('/');
+    		onLoginSuccess(username);
     	}catch(apiError){
     		this.setState({errors:apiError.response.data.message});
     	}
