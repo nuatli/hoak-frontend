@@ -1,7 +1,6 @@
 import React from 'react';
 import {withTranslation} from 'react-i18next';
-import { t } from 'i18next';
-import {signup,changeLanguage} from '../api/apiCalls';
+import {changeLanguage} from '../api/apiCalls';
 import trFlag from '../assets/turkey-flag-png-large.png';
 import enFlag from '../assets/united-kingdom-flag-png-large.png';
 const LanguageSelctor = (props) => {

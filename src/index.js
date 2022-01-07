@@ -3,12 +3,11 @@ import ReactDOM from 'react-dom';
 //import {Provider} from 'react-redux';
 import './bootstrap-override.scss';
 import './index.css';
-import UserSignUpPage from './components/pages/UserSignUpPage';
-import LoginPage from './components/pages/LoginPage';
-import LanguageSelector from './components/LanguageSelector';
 //import configureStore from './store/configureStore';
 import registerServiceWorker from './registerServiceWorker';
 import './i18n';
+
+import App from './container/App';
 
 /*
 ReactDOM.render(
@@ -20,10 +19,6 @@ ReactDOM.render(
 );
 */
 ReactDOM.render(
-		<div>
-			<UserSignUpPage />
-			<LanguageSelector />
-		</div>
-		,document.getElementById("root")
+		<App />,document.getElementById("root")
 );
 registerServiceWorker();

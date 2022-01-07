@@ -5,7 +5,7 @@ const ButtonWithProgress = (props) => {
 	return(
             <div className="text-center">
 	        	<button className="btn btn-primary" onClick={onClick} disabled={disabled }>
-	        		{pendingApiCall && <span className="spinner-border spinner-border-sm" ></span> }
+	        		{pendingApiCall && <span className="spinner-border spinner-border-sm " style={{marginRight:5}}></span> }
 	        		{text}
 	        	</button>
 	        </div>		

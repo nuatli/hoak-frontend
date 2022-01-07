@@ -2,8 +2,8 @@ import React from 'react';
 import {signup} from '../../api/apiCalls';
 import Input from '../Input';
 import {withTranslation} from 'react-i18next';
-import { t } from 'i18next';
 import ButtonWithProgress from '../ButtonWithProgress';
+import {withApiProgress} from '../../shared/ApiProgress';
 
 
 
@@ -13,7 +13,6 @@ class UserSignUpPage extends React.Component{
         displayName:null,
         password:null,
         passwordRepeat:null,
-        pendingApiCall:false,
         errors:{}
     };
 
@@ -45,39 +44,10 @@ class UserSignUpPage extends React.Component{
 		}
         this.setState({[name]:value,errors});
     } 
-    /*
     onClickSignUp = async event => {
     	event.preventDefault();
     	const {username,displayName,password} =this.state;
     	const body = {username,displayName,password};
-    	this.setState({pendingApiCall:true});
-    	axios.post('/api/0.0.1/users',body)
-    		.then((response) => {
-    			this.setState({pendingApiCall:false});
-    		}).catch(error => {
-    			this.setState({pendingApiCall:false});
-    		});
-    }
-    */
-    /*
-    onClickSignUp = async event => {
-    	event.preventDefault();
-    	const {username,displayName,password} =this.state;
-    	const body = {username,displayName,password};
-    	this.setState({pendingApiCall:true});
-    	signup(body)
-    		.then((response) => {
-    			this.setState({pendingApiCall:false});
-    		}).catch(error => {
-    			this.setState({pendingApiCall:false});
-    		});
-    }
-    */
-    onClickSignUp = async event => {
-    	event.preventDefault();
-    	const {username,displayName,password} =this.state;
-    	const body = {username,displayName,password};
-    	this.setState({pendingApiCall:true});
     	
     	try{
 			const response = await signup(body)   
@@ -86,11 +56,11 @@ class UserSignUpPage extends React.Component{
 				this.setState({errors:error.response.data.validationErrors});
 			}
     	}
-    	this.setState({pendingApiCall:false});
 	}
 	
     render(){
-    	const {pendingApiCall,errors} = this.state;
+    	const {t,pendingApiCall} = this.props;
+    	const {errors} = this.state;
     	const {username,displayName,password,passwordRepeat} = errors;
         return(
         	<div className="container">
@@ -106,7 +76,11 @@ class UserSignUpPage extends React.Component{
         )
     } 
 } 
-    
-const UserSignupPageWithTranslation = withTranslation()(UserSignUpPage);
+
+const UserSignupPageWithApiProgress = withApiProgress(UserSignUpPage,"/api/0.0.1/users");
+const UserSignupPageWithTranslation = withTranslation()(UserSignupPageWithApiProgress);
+
 
 export default UserSignupPageWithTranslation;
+
+

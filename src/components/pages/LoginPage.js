@@ -2,9 +2,8 @@ import React from 'react';
 import {login} from '../../api/apiCalls';
 import Input from '../Input';
 import {withTranslation} from 'react-i18next';
-import { t } from 'i18next';
-import axios from 'axios';
 import ButtonWithProgress from '../ButtonWithProgress';
+import {withApiProgress} from '../../shared/ApiProgress';
 
 class Login extends React.Component{
     state={
@@ -13,23 +12,7 @@ class Login extends React.Component{
         pendingApiCall:false,
         errors:null
     };
-    
-    componentDidMount(){
-    	console.log('Login Page add to Screen');
-    	axios.interceptors.request.use(request => {
-    		this.setState({pendingApiCall:true});
-    		return request;
-    	});
-    	
-    	axios.interceptors.response.use((response) => {
-				this.setState({pendingApiCall:false});
-				return response;
-    		},(error) => {
-				this.setState({pendingApiCall:false});
-				throw error;
-    		});
-    	
-    }
+
 
     onChangeUsername = event =>{
        this.setState({username:event.target.value});
@@ -48,12 +31,14 @@ class Login extends React.Component{
     
 	
     onClickLogin = async event => {
-    	event.preventDefault();
+    	event.preventDefault()
     	const {username,password}=this.state;
+    	const {history}=this.props;
     	const creds = {username,password};//const creds= {username:username,password:paswword};
     	this.setState({errors:null});
     	try{
     		await login(creds);
+    		history.push('/');
     	}catch(apiError){
     		this.setState({errors:apiError.response.data.message});
     	}
@@ -61,9 +46,9 @@ class Login extends React.Component{
     }
     
     render(){
-    	const {errors,username,password,pendingApiCall} = this.state;
+    	const {t,pendingApiCall} = this.props;
+    	const {errors,username,password} = this.state;
     	const buttonEnabled = username && password;
-    	console.log(pendingApiCall)
         return(
         	<div className="container">
 	            <form>
@@ -82,6 +67,8 @@ class Login extends React.Component{
     } 
 } 
     
-const LoginWithTranslation = withTranslation()(Login);
+const LoginPageWithApiProgress = withApiProgress(Login,"/api/0.0.1/auth");
+const LoginWithTranslation = withTranslation()(LoginPageWithApiProgress);
+
 
 export default LoginWithTranslation;
