@@ -8,6 +8,7 @@ import registerServiceWorker from './registerServiceWorker';
 import './i18n';
 
 import App from './container/App';
+import AuthenticationContext from './shared/AuthenticationContext';
 
 /*
 ReactDOM.render(
@@ -18,5 +19,5 @@ ReactDOM.render(
 		,document.getElementById("root")
 );
 */
-ReactDOM.render(<App />,document.getElementById("root"));
+ReactDOM.render(<AuthenticationContext><App /></AuthenticationContext>,document.getElementById("root"));
 registerServiceWorker();

@@ -7,29 +7,19 @@ import UserPage from '../components/pages/UserPage';
 import LanguageSelector from '../components/LanguageSelector';
 import TopBar from '../components/TopBar';
 import {/*BrowserRouter*/HashRouter as Router,Route,Redirect,Switch} from 'react-router-dom'; //BrowserRouter js dosyalarını tekrar yüklüyor backende sorgu atıyor.  HashRouter saklıyor geçiş yapıyor 
+import {Authentication} from '../shared/AuthenticationContext';
 
 class App extends React.Component{
-	state = {
-			isLoggedIn:false,
-			username:undefined
-	};
-	
-	onLoginSuccess = (username) => {
-		this.setState({username,isLoggedIn:true});
-	}
-	
-	onLogoutSuccess = () => {
-		this.setState({username:undefined,isLoggedIn:false});
-	}
+
 	
 	render(){
-		const {isLoggedIn,username}=this.state;
-		console.log(isLoggedIn,username)
-		console.log("/user/:"+username)
+		const isLoggedIn= false;
+		const username = undefined;
+		//const {isLoggedIn,username}=this.state;
 		return (
 				<div>
 					<Router>
-						<TopBar isLoggedIn={isLoggedIn} username={username} onLogoutSuccess={this.onLogoutSuccess}/>
+						<TopBar />
 						<Switch>
 							<Route exact path="/" component={HomePage} />
 							{!isLoggedIn && (<Route 
