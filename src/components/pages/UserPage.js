@@ -3,10 +3,8 @@ import ProfileCard from '../ProfileCard';
 
 const UserPage = props => {
 	return (
-			<div className="container"><ProfileCard username={props.username}/></div>
+			<div className="container"><ProfileCard /></div>
 	);
 };
 
 export default UserPage;
-
-/*<div className="container"><ProfileCard /></div>*/

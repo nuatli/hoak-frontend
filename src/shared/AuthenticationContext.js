@@ -13,22 +13,23 @@ class AuthenticationContext extends Component {
 	
 	onLoginSuccess = authState => {
 		this.setState({...authState,isLoggedIn:true});
-	}
+	};
 	
 	onLogoutSuccess = () => {
 		this.setState({username:undefined,isLoggedIn:false});
-	}
+	};
+	
 	render(){
 		return(
 				<Authentication.Provider value={{
-					state:{...state},
-					onLoginSuccesss:this.onLoginSuccesss,
-					onLogoutSuccess:this.onLogoutSuccess
+					state:{...this.state},
+					onLoginSuccess:this.onLoginSuccess,
+					onLogoutSucces:this.onLogoutSucces
 				}}>
-					{this.props.chieldren}
+					{this.props.children}
 				</Authentication.Provider>
 		)
 	}
 }
 
-export AuthenticationContext;
+export default AuthenticationContext;

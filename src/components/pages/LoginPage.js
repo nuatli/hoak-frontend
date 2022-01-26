@@ -1,11 +1,15 @@
-import React from 'react';
+import React,{Component} from 'react';
 import {login} from '../../api/apiCalls';
 import Input from '../Input';
 import {withTranslation} from 'react-i18next';
 import ButtonWithProgress from '../ButtonWithProgress';
 import {withApiProgress} from '../../shared/ApiProgress';
+//import {Authentication} from '../../shared/AuthenticationContext';
 
-class Login extends React.Component{
+class Login extends Component {
+	
+	//static contextType = Authentication; // Sadece class tipinde gecerli
+	
     state={
         username:null,
         password:null,
@@ -29,7 +33,7 @@ class Login extends React.Component{
         this.setState({[name]:value,errors:null});
     } 
     
-	
+	/*
     onClickLogin = async event => {
     	event.preventDefault()
     	const {username,password}=this.state;
@@ -40,6 +44,32 @@ class Login extends React.Component{
     		await login(creds);
     		history.push('/');
     		onLoginSuccess(username);
+    	}catch(apiError){
+    		this.setState({errors:apiError.response.data.message});
+    	}
+    	
+    }
+    */
+    onClickLogin = async event => {
+    	event.preventDefault()
+    	const {username,password}=this.state;
+    	const onLoginSuccess = () => {}
+    	const creds = {username,password};
+    	const {push} = this.props.history;
+    	this.setState({errors:null});
+    	try{
+    		const response = await login(creds);
+    		push('/');
+    		/*
+    		const authState = {
+    				username:username,
+    				pasword:password,
+    				displayName:response.data.displayName;
+    				image:response.data.image;
+    		}
+    		*/
+    		const authState = {...response.data,password};
+    		onLoginSuccess(authState);
     	}catch(apiError){
     		this.setState({errors:apiError.response.data.message});
     	}

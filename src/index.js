@@ -1,14 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-//import {Provider} from 'react-redux';
 import './bootstrap-override.scss';
 import './index.css';
-//import configureStore from './store/configureStore';
-import registerServiceWorker from './registerServiceWorker';
 import './i18n';
-
+import registerServiceWorker from './registerServiceWorker';
 import App from './container/App';
-import AuthenticationContext from './shared/AuthenticationContext';
+import {Provider} from 'react-redux';
+import configureStore from './redux/configureStore';
+
+
+
+
+
+
+const store = configureStore();
 
 /*
 ReactDOM.render(
@@ -19,5 +24,10 @@ ReactDOM.render(
 		,document.getElementById("root")
 );
 */
-ReactDOM.render(<AuthenticationContext><App /></AuthenticationContext>,document.getElementById("root"));
+ReactDOM.render(
+		<Provider store={store}>
+			<App />
+		</Provider>
+,document.getElementById("root"));
+//ReactDOM.render(<App />,document.getElementById("root"));
 registerServiceWorker();
