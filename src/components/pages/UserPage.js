@@ -1,9 +1,9 @@
 import React from 'react';
-import ProfileCard from '../ProfileCard';
+import ProfileCardContainer from '../../container/ProfileCardContainer';
 
 const UserPage = props => {
 	return (
-			<div className="container"><ProfileCard /></div>
+			<div className="container"><ProfileCardContainer /></div>
 	);
 };
 

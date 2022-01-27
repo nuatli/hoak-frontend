@@ -4,7 +4,7 @@ import './bootstrap-override.scss';
 import './index.css';
 import './i18n';
 import registerServiceWorker from './registerServiceWorker';
-import App from './container/App';
+import AppContainer from './container/AppContainer';
 import {Provider} from 'react-redux';
 import configureStore from './redux/configureStore';
 
@@ -15,6 +15,7 @@ import configureStore from './redux/configureStore';
 
 const store = configureStore();
 
+window.store = store;
 /*
 ReactDOM.render(
 		<Provider >
@@ -26,7 +27,7 @@ ReactDOM.render(
 */
 ReactDOM.render(
 		<Provider store={store}>
-			<App />
+			<AppContainer />
 		</Provider>
 ,document.getElementById("root"));
 //ReactDOM.render(<App />,document.getElementById("root"));

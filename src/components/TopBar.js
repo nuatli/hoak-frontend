@@ -2,8 +2,6 @@ import React,{Component} from 'react';
 import logo from '../assets/avatar.png';
 import {Link} from 'react-router-dom';
 import {withTranslation} from 'react-i18next';
-import {connect} from 'react-redux';
-import {logoutSuccess} from '../redux/authActions';
 
 class TopBar extends Component{
 	//static contextType = Authentication; // Sadece class tipinde gecerli
@@ -11,8 +9,6 @@ class TopBar extends Component{
     render(){
     	//console.log(this.context)
     	const {t,username,isLoggedIn,onLogoutSuccess} =this.props;
-    	console.log(isLoggedIn)
-    	console.log(username)
 		let links = (
 			<ul className="navbar-nav ml-auto">
 				<li>

@@ -13,13 +13,4 @@ const ProfileCard = (props) => {
 };
 
 
-/*
-class ProfileCardContextWrapper extends React.Component{
-	//static contextType = Authentication;
-	render(){
-		return <ProfileCard {...this.props} username={this.context.state.username} />
-	}
-}
-*/
-
 export default withRouter(ProfileCard);

@@ -48,9 +48,12 @@ class UserSignUpPage extends React.Component{
     	event.preventDefault();
     	const {username,displayName,password} =this.state;
     	const body = {username,displayName,password};
-    	
     	try{
-			const response = await signup(body)   
+	    	const {history,signupHandler} = this.props;
+	    	const {push} = history;
+			const response = await signupHandler(body);
+			console.log(response);
+	    	push('/');
     	}catch(error){
 			if(error.response.data.validationErrors){
 				this.setState({errors:error.response.data.validationErrors});
@@ -76,10 +79,14 @@ class UserSignUpPage extends React.Component{
         )
     } 
 } 
-
-const UserSignupPageWithApiProgress = withApiProgress(UserSignUpPage,"/api/0.0.1/users");
-const UserSignupPageWithTranslation = withTranslation()(UserSignupPageWithApiProgress);
-
+/*
+const UserSignupPageWithApiProgressForSignUpRequest = withApiProgress(UserSignUpPage,"/api/0.0.1/users");
+const UserSignupPageWithApiProgressForLoginRequest = withApiProgress(UserSignupPageWithApiProgressForSignUpRequest,"/api/0.0.1/auth");
+const UserSignupPageWithTranslation = withTranslation()(UserSignupPageWithApiProgressForLoginRequest);
+*/
+const UserSignupPageWithApiProgressForSignUpRequest = withApiProgress(UserSignUpPage,"/api/0.0.1/users");
+const UserSignupPageWithApiProgressForLoginRequest = withApiProgress(UserSignupPageWithApiProgressForSignUpRequest,"/api/0.0.1/auth");
+const UserSignupPageWithTranslation = withTranslation()(UserSignupPageWithApiProgressForLoginRequest);
 
 export default UserSignupPageWithTranslation;
 

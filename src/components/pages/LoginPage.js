@@ -33,43 +33,15 @@ class Login extends Component {
         this.setState({[name]:value,errors:null});
     } 
     
-	/*
     onClickLogin = async event => {
     	event.preventDefault()
     	const {username,password}=this.state;
-    	const {onLoginSuccess,history}=this.props;
-    	const creds = {username,password};//const creds= {username:username,password:paswword};
-    	this.setState({errors:null});
-    	try{
-    		await login(creds);
-    		history.push('/');
-    		onLoginSuccess(username);
-    	}catch(apiError){
-    		this.setState({errors:apiError.response.data.message});
-    	}
-    	
-    }
-    */
-    onClickLogin = async event => {
-    	event.preventDefault()
-    	const {username,password}=this.state;
-    	const onLoginSuccess = () => {}
     	const creds = {username,password};
     	const {push} = this.props.history;
     	this.setState({errors:null});
     	try{
-    		const response = await login(creds);
+    		await this.props.loginHandler(creds);
     		push('/');
-    		/*
-    		const authState = {
-    				username:username,
-    				pasword:password,
-    				displayName:response.data.displayName;
-    				image:response.data.image;
-    		}
-    		*/
-    		const authState = {...response.data,password};
-    		onLoginSuccess(authState);
     	}catch(apiError){
     		this.setState({errors:apiError.response.data.message});
     	}

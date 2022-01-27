@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import TopBar from '../components/TopBar';
+import ProfileCard from '../components/ProfileCard';
 import {logoutSuccess} from '../actions/authActions';
 
 const mapStateToProps = (reduxState) => {
@@ -16,4 +16,4 @@ const mapDispatchToProps = dispatch => {
 	}
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(TopBar);
+export default connect(mapStateToProps,mapDispatchToProps)(ProfileCard);
