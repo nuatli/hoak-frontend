@@ -7,7 +7,6 @@ import UserPage from './components/pages/UserPage';
 import LanguageSelector from './components/LanguageSelector';
 import TopBarContainer from './container/TopBarContainer';
 import {/*BrowserRouter*/HashRouter as Router,Route,Redirect,Switch} from 'react-router-dom'; //BrowserRouter js dosyalarını tekrar yüklüyor backende sorgu atıyor.  HashRouter saklıyor geçiş yapıyor 
-//import {Authentication} from '../shared/AuthenticationContext';
 
 
 class App extends React.Component{
