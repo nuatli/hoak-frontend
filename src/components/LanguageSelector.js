@@ -1,11 +1,13 @@
 import React from 'react';
-import {withTranslation} from 'react-i18next';
+//import {withTranslation} from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import {changeLanguage} from '../api/apiCalls';
 import trFlag from '../assets/turkey-flag-png-large.png';
 import enFlag from '../assets/united-kingdom-flag-png-large.png';
 const LanguageSelctor = (props) => {
-	const onChangeLanguage = language => {
-		const {i18n} = props;
+	const {i18n} = useTranslation();
+	
+	const onChangeLanguage = language => {	
 		i18n.changeLanguage(language); 
 		changeLanguage(language);
 	}
@@ -18,4 +20,5 @@ const LanguageSelctor = (props) => {
 };
 
 
-export default withTranslation()(LanguageSelctor);
+//export default withTranslation()(LanguageSelctor);
+export default LanguageSelctor;

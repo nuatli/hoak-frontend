@@ -5,24 +5,30 @@ import {useTranslation} from 'react-i18next';
 import ButtonWithProgress from '../ButtonWithProgress';
 import {withApiProgress} from '../../shared/ApiProgress';
 //import {Authentication} from '../../shared/AuthenticationContext';
+import {useDispatch} from 'react-redux'; 
+import {loginHandler} from '../../actions/authActions';  
 
 const Login = (props) =>  {
 	
 	const [username,setUsername] = useState();
 	const [password,setPassword] = useState();
 	const [error,setError] = useState();
+
+	const {t} = useTranslation();
+	const dispatch = useDispatch();  
 	
 	useEffect(()=> {
 		setError(null);
 	},[username,password]);
 
     const onClickLogin = async event => {
-    	event.preventDefault()
-    	const creds = {username,password};
-    	const {push} = props.history;
+    	event.preventDefault();
+		const creds = {username,password};
+		const { history } = props; 
+    	const { push } = history;
     	setError(null);
     	try{
-    		await props.loginHandler(creds);
+			await dispatch(loginHandler(creds));
     		push('/');
     	}catch(apiError){
     		setError(apiError.response.data.message);
@@ -31,7 +37,7 @@ const Login = (props) =>  {
     }
     
 	const {pendingApiCall} = props;
-	const {t} = useTranslation;
+	
 	const buttonEnabled = username && password;
     return(
     	<div className="container">
