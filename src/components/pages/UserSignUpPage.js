@@ -4,7 +4,7 @@ import Input from '../Input';
 //import {withTranslation} from 'react-i18next';
 import {useTranslation} from 'react-i18next';
 import ButtonWithProgress from '../ButtonWithProgress';
-import {withApiProgress} from '../../shared/ApiProgress';
+import {useApiProgress} from '../../shared/ApiProgress';
 import {useDispatch} from 'react-redux'; 
 import {signupHandler} from '../../actions/authActions'; 
 
@@ -53,7 +53,10 @@ const UserSignUpPage = (props) => {
     	}
 	}
 	const {t} = useTranslation();
-	const {pendingApiCall} = props;
+	//const {pendingApiCall} = props;
+	const pendingApiCallSignup = useApiProgress("/api/0.0.1/users");
+	const pendingApiCallLogin = useApiProgress("/api/0.0.1/auth");
+	const pendingApiCall = pendingApiCallSignup||  pendingApiCallLogin;
 	const {username:usernameError,displayName:displayNameError,password:passwordError} = errors;
 
 	let passwordRepeatError;
@@ -73,21 +76,8 @@ const UserSignUpPage = (props) => {
         </div>
     )
 } 
-/*
-const UserSignupPageWithApiProgressForSignUpRequest = withApiProgress(UserSignUpPage,"/api/0.0.1/users");
-const UserSignupPageWithApiProgressForLoginRequest = withApiProgress(UserSignupPageWithApiProgressForSignUpRequest,"/api/0.0.1/auth");
-const UserSignupPageWithTranslation = withTranslation()(UserSignupPageWithApiProgressForLoginRequest);
-*/
 
-/*
-const UserSignupPageWithApiProgressForSignUpRequest = withApiProgress(UserSignUpPage,"/api/0.0.1/users");
-const UserSignupPageWithApiProgressForLoginRequest = withApiProgress(UserSignupPageWithApiProgressForSignUpRequest,"/api/0.0.1/auth");
-const UserSignupPageWithTranslation = withTranslation()(UserSignupPageWithApiProgressForLoginRequest);
-*/
 
-const UserSignupPageWithApiProgressForSignUpRequest = withApiProgress(UserSignUpPage,"/api/0.0.1/users");
-const UserSignupPageWithApiProgressForLoginRequest = withApiProgress(UserSignupPageWithApiProgressForSignUpRequest,"/api/0.0.1/auth");
-
-export default UserSignupPageWithApiProgressForLoginRequest;
+export default UserSignUpPage;
 
 
