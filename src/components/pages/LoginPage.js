@@ -56,9 +56,6 @@ const Login = (props) =>  {
     );
     
 } 
-/* 
-const LoginPageWithApiProgress = withApiProgress(Login,"/api/0.0.1/auth");
-const LoginWithTranslation = withTranslation()(LoginPageWithApiProgress);
-*/
+
 
 export default Login;
