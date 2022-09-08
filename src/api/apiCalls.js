@@ -12,3 +12,8 @@ export const login = creds => {
 	return axios.post('/api/0.0.1/auth',{},{auth:creds});
 	//return axios.post('/api/0.0.1/auth',{});
 };
+
+
+export const getUsers = ()  =>{
+	return axios.get('/api/0.0.1/users');
+} 

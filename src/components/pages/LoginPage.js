@@ -36,7 +36,7 @@ const Login = (props) =>  {
     	
     }
     
-	const {pendingApiCall} = useApiProgress("/api/0.0.1/auth");
+	const pendingApiCall = useApiProgress("/api/0.0.1/auth");
 	
 	const buttonEnabled = username && password;
     return(

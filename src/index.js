@@ -10,9 +10,6 @@ import configureStore from './redux/configureStore';
 
 
 
-
-
-
 const store = configureStore();
 
 window.store = store;

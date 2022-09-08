@@ -1,7 +1,11 @@
 import React from 'react';
-
+import UserList from '../UserList';
 const HomePage = () => {
-	return <div className="container">Home Page</div>;
+	return( 
+		<div className="container">
+			<UserList />
+		</div>
+	)
 };
 
 export default HomePage;
