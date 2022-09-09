@@ -30,13 +30,13 @@ export const useApiProgress = (apiPath) =>{
 
 
 	const updateApiCallFor = (url,inProgress,path) => {
-		if(url === path){
+		if(url.startsWidth(path)){
 			setPendingApiCall(inProgress);
 		}
 	}
 
 	useEffect(() => {
-
+		console.log("asd")
 		
 		registerInterceptors();
 		
@@ -46,7 +46,7 @@ export const useApiProgress = (apiPath) =>{
 		} 
 
 		return unmount()
-	});
+	},[]);
 
 	return pendingApiCall;
 }  

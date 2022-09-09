@@ -1,5 +1,6 @@
 import {LOGIN_SUCCESS} from '../actions/authActions';
 import SecureLS from 'secure-ls';
+import {setAuthorizationHeader} from '../api/apiCalls'
 
 const secureLS = new SecureLS();
 const defaultState = {
@@ -19,13 +20,17 @@ const getStateFromStorage = () => {
 		try{
 			//initialState = JSON.parse(hoaxAuth)
 			initialState = hoaxAuth;
-		}catch (e) {}
+		}catch (e) {
+
+		}
 	}
 	return initialState;
 }
 
 
+
 const authReducer = (state = {...getStateFromStorage()},action) => {
+	setAuthorizationHeader(getStateFromStorage()); //CurrentUser listede gözükmesin diye
 	if(action.type === 'logout-success'){
 		return defaultState;
 	}else if(action.type === LOGIN_SUCCESS){
@@ -33,5 +38,7 @@ const authReducer = (state = {...getStateFromStorage()},action) => {
 	}
 	return state;
 }
+
+
 
 export default authReducer;
