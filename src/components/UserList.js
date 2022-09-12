@@ -4,12 +4,15 @@ import {useTranslation} from 'react-i18next';
 import UserListItem from './UserListItem';
 import {useApiProgress} from '../shared/ApiProgress';
 
+
 const UserList = () => {
 	const [page,setPage] = useState({
 		content:[],size:10,number:0
 	});
 
-	const pendingApiCAll = useApiProgress(`/api/0.0.1/user?page`);
+	const [loadFailure,setLoadFailure] = useState(false);
+
+	const pendingApiCall = useApiProgress("/api/0.0.1/usersWithPage");
 
 	useEffect(()=> {
 		loadUsers();
@@ -25,11 +28,20 @@ const UserList = () => {
 		loadUsers(previousPage);
 	}
 
-	const loadUsers = page => {
-		getUsersWithPage(page).then(response =>{
+	const loadUsers = async page => {
+		setLoadFailure(false);
+		try {	
+			const response = await getUsers(page);
 			setPage(response.data);
-		})
+		}catch(error){
+			setLoadFailure(true);
+		}
 	}
+
+
+	const { content:users ,last,first} = page;
+	const { t }  = useTranslation();
+	
 
 	let actionDiv = (
 		<div>
@@ -37,8 +49,8 @@ const UserList = () => {
 			{last === false && <button className="btn btn-sm btn-light float-right" onClick={onClickNext} >{">	"}</button>}
 		</div>
 	);
-
-	if(pendingApiCAll){
+	
+	if(pendingApiCall){
 		actionDiv = (
 			<div className="d-flex justify-content-center">
 				<div className="spinner-border">
@@ -49,9 +61,10 @@ const UserList = () => {
 			</div>
 		)
 	}
+	
 
-	const { content:users ,last,first} = page;
-	const { t }  = useTranslation();
+
+
 	return(
 
 		<div className="card">
@@ -64,6 +77,7 @@ const UserList = () => {
 				}
 			</div>
 			{actionDiv}
+			{loadFailure && <div className="text-center text-danger"> {t('Load Failure')} </div>}
 
 	
 		</div>
