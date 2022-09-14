@@ -14,7 +14,12 @@ i18n.use(initReactI18next).init({
                 'Login':'Login',
                 'Logout':'Logout',
                 'Users':'Users',
-                'Load Failure':'Load Failure'
+                'Load Failure':'Load Failure',
+                'User not Found':'User not Found',
+                'Edit':'Edit',
+                'Cancel':'Cancel',
+                'Save':'Save',
+                'Change Display Name':'Change Display Name'
            }
         },
         tr:{
@@ -26,8 +31,15 @@ i18n.use(initReactI18next).init({
                 'Password':'Şifre',
                 'Password Repeat':'Şifre Tekrarı',
                 'Login':'Giriş',
+                'Logout':'Çıkış',
                 'Users':'Kullanıcılar',
-                'Load Failure':'Liste Alınamadı'
+                'Load Failure':'Liste Alınamadı',
+                'User not Found':'Kullanıcı Bulunamadı',
+                'Edit':'Düzenle',
+                'Cancel':'İptal',
+                'Save':'Kaydet',
+                'Change Display Name':'Görünen adınızı değiştirin'
+                
             } 
         }
     },

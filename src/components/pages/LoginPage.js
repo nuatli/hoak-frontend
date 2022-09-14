@@ -36,7 +36,7 @@ const Login = (props) =>  {
     	
     }
     
-	const pendingApiCall = useApiProgress("/api/0.0.1/auth");
+	const pendingApiCall = useApiProgress("post","/api/0.0.1/auth");
 	
 	const buttonEnabled = username && password;
     return(
@@ -50,7 +50,7 @@ const Login = (props) =>  {
 						{error}
 					</div>	
                 }
-				<ButtonWithProgress onClick={onClickLogin} disabled={!buttonEnabled || pendingApiCall} text={t('Login')} pendingApiCall={pendingApiCall}/>
+				<ButtonWithProgress onClick={onClickLogin} disabled={!buttonEnabled || pendingApiCall} text={t('Login')} pendingApiCall={pendingApiCall} className="btn btn-primary"/>
             </form>
         </div>
     );

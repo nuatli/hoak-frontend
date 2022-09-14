@@ -54,8 +54,8 @@ const UserSignUpPage = (props) => {
 	}
 	const {t} = useTranslation();
 	//const {pendingApiCall} = props;
-	const pendingApiCallSignup = useApiProgress("/api/0.0.1/users");
-	const pendingApiCallLogin = useApiProgress("/api/0.0.1/auth");
+	const pendingApiCallSignup = useApiProgress("post","/api/0.0.1/users");
+	const pendingApiCallLogin = useApiProgress("post","/api/0.0.1/auth");
 	const pendingApiCall = pendingApiCallSignup||  pendingApiCallLogin;
 	const {username:usernameError,displayName:displayNameError,password:passwordError} = errors;
 
@@ -71,7 +71,7 @@ const UserSignUpPage = (props) => {
 				<Input name="displayName" label={t("Display Name")} error={displayNameError}  onChange={onChange} />
 				<Input name="password" label={t("Password")} type="password" error={passwordError}  onChange={onChange} />
 				<Input name="passwordRepeat" label={t("Password Repeat")} type="password" error={passwordRepeatError}  onChange={onChange} />
-				<ButtonWithProgress onClick={onClickSignUp} disabled={passwordRepeatError !== undefined || pendingApiCall} text={t('Sign Up')} pendingApiCall={pendingApiCall}/>
+				<ButtonWithProgress onClick={onClickSignUp} disabled={passwordRepeatError !== undefined || pendingApiCall} text={t('Sign Up')} pendingApiCall={pendingApiCall} className="btn btn-primary"/>
             </form>
         </div>
     )

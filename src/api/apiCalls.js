@@ -24,7 +24,7 @@ export const getUsersWithPage = (page = 0,size=10)  =>{
 } 
 
 export const setAuthorizationHeader = ({username,password,isLoggedIn}) => {
-	console.log("isloggedIn : ",isLoggedIn)
+	//console.log("isloggedIn : ",isLoggedIn)
 	if(isLoggedIn){
 		const authorizationHeaderValue = `Basic ${btoa(username+':'+password)}` ;
 		axios.defaults.headers['Authorization'] = authorizationHeaderValue;
@@ -32,4 +32,13 @@ export const setAuthorizationHeader = ({username,password,isLoggedIn}) => {
 		delete axios.defaults.headers['Authorization'];
 	}
 
+}
+
+
+export const getUser = username => {
+	return axios.get(`/api/0.0.1/users/${username}`);
+}
+
+export const updateUser = (username,body) => {
+	return axios.put(`/api/0.0.1/users/${username}`,body);
 }
