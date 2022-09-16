@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export const signup = body => {
+	//console.log("3")
 	return axios.post('/api/0.0.1/users',body); 
 };
 
@@ -12,7 +13,6 @@ export const login = creds => {
 	return axios.post('/api/0.0.1/auth',{},{auth:creds});
 	//return axios.post('/api/0.0.1/auth',{});
 };
-
 
 export const getUsers = ()  =>{
 	//return axios.get('/api/0.0.1/users');
@@ -34,11 +34,12 @@ export const setAuthorizationHeader = ({username,password,isLoggedIn}) => {
 
 }
 
-
 export const getUser = username => {
+	//console.log("1")
 	return axios.get(`/api/0.0.1/users/${username}`);
 }
 
 export const updateUser = (username,body) => {
+	//console.log("2")
 	return axios.put(`/api/0.0.1/users/${username}`,body);
 }

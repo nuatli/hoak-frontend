@@ -20,6 +20,7 @@ const ProfileCard = (props) => {
 	const [user,setUser] = useState(props.tempUser);
 	const [editable,setEditable] = useState(false);
 	const [newImage,setNewImage] = useState();
+	const [validationErrors,setValidationErrors] = useState({});
 
 	
 
@@ -27,20 +28,19 @@ const ProfileCard = (props) => {
 		setUser(props.tempUser);
 	},[props.tempUser]);
 
+	useEffect(() => {
+		setEditable(pathUsername === loggedInUserName);
+	},[pathUsername,loggedInUserName]);
+
+	useEffect(() => {
+		setValidationErrors((previousValidationErrors) => ({
+		...previousValidationErrors,displayName:undefined	
+		}));
+	},[updatedDisplayName]);
+
+
 	const { username, displayName, image } = user;
 	const [updatedDisplayName,setUpdatedDisplayName] = useState();
-	
-
-	const onClickSave = async () => {
-		const body  = {displayName:updatedDisplayName,image:newImage};
-		try {
-			const response = await updateUser(username,body);
-			setUser(response.data);
-			setInEditMode(false);
-		}catch(error){
-			console.debug(error);
-		}
-	}
 
 	useEffect(() => {
 		if(!inEditMode){
@@ -51,11 +51,28 @@ const ProfileCard = (props) => {
 		}
 	},[inEditMode,displayName]);
 
-	useEffect(() => {
-		setEditable(pathUsername === loggedInUserName);
-	},[pathUsername,loggedInUserName]);
+	const onClickSave = async () => {
+		let image;
+	
+		if(newImage){
+			image = newImage.split(',')[1];
+		}
+	
+		const body  = {displayName:updatedDisplayName,image};
+		try {
+			const response = await updateUser(username,body);
+			setUser(response.data);
+			setInEditMode(false);
+		}catch(error){
+			setValidationErrors(error.response.data.validationErrors);
+		}
+	}
+
 
 	const onChangeFile = event => {
+		if(event.target.files.length < 1){
+			return;
+		}
 		const file = event.target.files[0];
 		const fileReader = new FileReader();
 		fileReader.onloadend = () => {
@@ -65,7 +82,7 @@ const ProfileCard = (props) => {
 	}
 
 	const pendingApiCall = useApiProgress("put",`/api/0.0.1/users/${username}`);
-
+	const {displayName : displayNameError} = validationErrors
 
 	return (
 		<div className="card text-center">
@@ -87,7 +104,7 @@ const ProfileCard = (props) => {
 				}
 				{ inEditMode &&(
 					<div>
-						<Input label={t("Change Display Name")} defaultValue={displayName} onChange={(event) =>{setUpdatedDisplayName(event.target.value)}} />
+						<Input label={t("Change Display Name")} defaultValue={displayName} onChange={(event) =>{setUpdatedDisplayName(event.target.value)}} error={displayNameError}/>
 						<div className="mw-25"><input type="file" onChange={onChangeFile}  /></div>
 						<div className="d-inline-flex" >
 							<ButtonWithProgress 

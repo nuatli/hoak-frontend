@@ -22,6 +22,12 @@ ReactDOM.render(
 		,document.getElementById("root")
 );
 */
+
+if(module.hot){
+	console.log("reload")
+}
+
+
 ReactDOM.render(
 		<Provider store={store}>
 			<AppContainer />
