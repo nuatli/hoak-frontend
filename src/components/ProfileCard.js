@@ -32,11 +32,7 @@ const ProfileCard = (props) => {
 		setEditable(pathUsername === loggedInUserName);
 	},[pathUsername,loggedInUserName]);
 
-	useEffect(() => {
-		setValidationErrors((previousValidationErrors) => ({
-		...previousValidationErrors,displayName:undefined	
-		}));
-	},[updatedDisplayName]);
+
 
 
 	const { username, displayName, image } = user;
@@ -68,6 +64,22 @@ const ProfileCard = (props) => {
 		}
 	}
 
+	const onChangHandler = event => {
+		//(event) =>{setUpdatedDisplayName(event.target.value)}
+		setUpdatedDisplayName(event.target.value);
+	}
+
+	useEffect(() => {
+		setValidationErrors((previousValidationErrors) => ({
+		...previousValidationErrors,displayName:undefined	
+		}));
+	},[updatedDisplayName]);
+
+	useEffect(() => {
+		setValidationErrors((previousValidationErrors) => ({
+		...previousValidationErrors,image:undefined	
+		}));
+	},[newImage]);
 
 	const onChangeFile = event => {
 		if(event.target.files.length < 1){
@@ -82,7 +94,8 @@ const ProfileCard = (props) => {
 	}
 
 	const pendingApiCall = useApiProgress("put",`/api/0.0.1/users/${username}`);
-	const {displayName : displayNameError} = validationErrors
+	const {displayName : displayNameError,image:imageError} = validationErrors
+
 
 	return (
 		<div className="card text-center">
@@ -104,8 +117,8 @@ const ProfileCard = (props) => {
 				}
 				{ inEditMode &&(
 					<div>
-						<Input label={t("Change Display Name")} defaultValue={displayName} onChange={(event) =>{setUpdatedDisplayName(event.target.value)}} error={displayNameError}/>
-						<div className="mw-25"><input type="file" onChange={onChangeFile}  /></div>
+						<Input label={t("Change Display Name")} defaultValue={displayName} onChange={onChangHandler} error={displayNameError}/>
+						<div className="mw-25"><Input type="file" onChange={onChangeFile}  error = {imageError}/></div>
 						<div className="d-inline-flex" >
 							<ButtonWithProgress 
 								className="btn btn-primary d-inline-flex" 

@@ -4,7 +4,8 @@ import {Link} from 'react-router-dom';
 //import {withTranslation} from 'react-i18next';
 import {useTranslation} from 'react-i18next';
 import {useDispatch,useSelector} from 'react-redux'; 
-import {logoutSuccess} from '../actions/authActions'; 
+import {logoutSuccess} from '../actions/authActions';
+import ProfileImageWithDefault from './ProfileImageWithDefault'; 
 
 const TopBar = (props)  => {
 	const {t} = useTranslation();
@@ -13,12 +14,14 @@ const TopBar = (props)  => {
 	
 		return{
 			isLoggedIn:store.authReducer.isLoggedIn,
-			username:store.authReducer.username
+			username:store.authReducer.username,
+			displayName:store.authReducer.displayName,
+			image:store.authReducer.image,
 		} 
 	
 	});
 
-	const { username,isLoggedIn } = reduxState; 
+	const { username,isLoggedIn,displayName,image } = reduxState; 
 
 	const onLogoutSuccess = () => {
 		dispatch(logoutSuccess());
@@ -35,8 +38,17 @@ const TopBar = (props)  => {
 	if(isLoggedIn){
 		links= (
 			<ul className="navbar-nav ml-auto">
-				<li><Link className="nav-link" to={"/user/"+username}>{username}</Link></li>
-				<li className="nav-link" onClick={onLogoutSuccess} style={{cursor:'pointer'}}>{t('Logout')}</li>
+				<li className="nav-item dropdown p-0 shadow">
+					<div className="d-flex" style={{cursor:'pointer'}}>
+						<ProfileImageWithDefault alt={`${username} profile`} image={image}  className="rounded-circle shadow m-auto" width="32" height="32" tempimage={image} /> 
+						<span className="nav-link dropdown-toggle" >{displayName}</span>
+					</div>
+					<div className="dropdown-menu show">
+						<li><Link className="dropdown-item d-flex p-2" to={"/user/"+username}><i className="material-icons text-info mr-2">person</i> {t('MyProfile')}</Link></li>
+						<span className="dropdown-item d-flex p-2" onClick={onLogoutSuccess} style={{cursor:'pointer'}}><i className="material-icons text-danger mr-2">power_settings_new</i> {t('Logout')}</span>
+					</div>
+				</li>
+	
 			</ul>
 		)
 	}
