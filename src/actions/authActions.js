@@ -12,6 +12,11 @@ export const loginSuccessAction = data => {
 	return{type:LOGIN_SUCCESS,payload:data};
 }
 
+export const UPDATE_SUCCESS = "UPDATE_SUCCESS";
+export const updateSuccessAction = data => {
+	return{type:UPDATE_SUCCESS,payload:data};
+}
+
 
 export function loginHandler(credentials){
 	return async function(dispatch){

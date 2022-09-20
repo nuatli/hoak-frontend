@@ -25,10 +25,11 @@ const App = () => {
 						<Redirect to="/" />
 					</Switch>
 				</Router>
-				<LanguageSelector />
+				
 			</div>
 	);
 	
 }
 
 export default App;
+//Routerın altında <LanguageSelector />

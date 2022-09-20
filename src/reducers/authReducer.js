@@ -1,4 +1,4 @@
-import {LOGIN_SUCCESS} from '../actions/authActions';
+import {LOGIN_SUCCESS,UPDATE_SUCCESS} from '../actions/authActions';
 import SecureLS from 'secure-ls';
 import {setAuthorizationHeader} from '../api/apiCalls'
 
@@ -35,6 +35,8 @@ const authReducer = (state = {...getStateFromStorage()},action) => {
 		return defaultState;
 	}else if(action.type === LOGIN_SUCCESS){
 		return {...action.payload,isLoggedIn:true}
+	}else if(action.type === UPDATE_SUCCESS){
+		return {...state,...action.payload}
 	}
 	return state;
 }
