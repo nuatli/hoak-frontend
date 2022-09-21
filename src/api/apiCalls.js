@@ -43,3 +43,11 @@ export const updateUser = (username,body) => {
 	//console.log("2")
 	return axios.put(`/api/0.0.1/users/${username}`,body);
 }
+
+export const postHoax = hoax => {
+	return axios.post(`/api/0.0.1/hoaxes`,hoax);
+}
+
+export const getHoaxes = () => {
+	return axios.get(`/api/0.0.1/hoaxes`);
+}

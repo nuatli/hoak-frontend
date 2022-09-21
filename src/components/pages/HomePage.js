@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector }  from 'react-redux';
 import UserList from '../UserList';
 import HoaxSubmit from '../HoaxSubmit';
+import HoaxFeed from '../HoaxFeed';
 const HomePage = () => {
 	const reduxState = useSelector((store) => {
 	
@@ -20,6 +21,7 @@ const HomePage = () => {
 		<div className="container">
 			<div className="row">
 				{ isLoggedIn && <div className="col"><HoaxSubmit /></div>}
+				<HoaxFeed />
 				<div className="col"><UserList /></div>
 			</div>
 		</div>

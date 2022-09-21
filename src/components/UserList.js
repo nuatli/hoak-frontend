@@ -55,7 +55,7 @@ const UserList = () => {
 		actionDiv = (<Spinner />)
 	}
 	
-
+	//console.table(users)
 
 
 	return(
