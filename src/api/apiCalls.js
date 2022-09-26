@@ -48,6 +48,12 @@ export const postHoax = hoax => {
 	return axios.post(`/api/0.0.1/hoaxes`,hoax);
 }
 
+/*
 export const getHoaxes = () => {
 	return axios.get(`/api/0.0.1/hoaxes`);
+}
+*/
+
+export const getHoaxes = (page = 0) => {
+	return axios.get(`/api/0.0.1/hoaxes?page=`+page);
 }

@@ -15,13 +15,17 @@ const HomePage = () => {
 	
 	});
 	const { isLoggedIn } = reduxState;
-	console.log(isLoggedIn)
 	
 	return( 
 		<div className="container">
 			<div className="row">
-				{ isLoggedIn && <div className="col"><HoaxSubmit /></div>}
-				<HoaxFeed />
+				<div className="col">
+					{ isLoggedIn && 
+						<div className="mb-1"> <HoaxSubmit /> </div>
+					} 
+					<HoaxFeed />
+				</div>
+				
 				<div className="col"><UserList /></div>
 			</div>
 		</div>
