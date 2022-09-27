@@ -7,18 +7,23 @@ import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
 import {useApiProgress} from '../../shared/ApiProgress';
 import Spinner from '../Spinner';
+import HoaxFeed from '../HoaxFeed';
 
 
 const UserPage = () => {
-	const [user,setUser] = useState();
+	const [user,setUser] = useState({});
 	const [notFound,setNotFound] = useState(false);
 	//const { username } = props.match.params; 
 	const { username } = useParams(); //<Route path="/user/:username" component={UserPage} /> App.jsdeki
 	const { t }  = useTranslation();
 	const dispatch = useDispatch(); 
 	
-	const  pendingApiCall = useApiProgress("get",`/api/0.0.1/users/${username}`);
+	const  pendingApiCall = useApiProgress("get",`/api/0.0.1/users/${username}`,true);
 	
+	useEffect(()=> {
+		setNotFound(false);	
+	},[user])
+
 	const loadUser = async()  => {
 		try{
 			const response = await getUser(username);
@@ -34,15 +39,6 @@ const UserPage = () => {
 		loadUser();	
 	},[username])
 
-	
-	useEffect(()=> {
-		setNotFound(false);	
-	},[user])
-
-
-	if(pendingApiCall){
-		return (<Spinner />)
-	}
 
 	if(notFound){
 		return(
@@ -55,8 +51,23 @@ const UserPage = () => {
 		);
 	}
 
+	if(pendingApiCall || user.username !== username){
+		return (<Spinner />)
+	}
+
+
 	return (
-			<div className="container"><ProfileCardContainer user={user}/></div>
+			<div className="container">
+				<div className="row">
+					<div className="col">
+						<ProfileCardContainer user={user}/>
+					</div>
+					<div className="col">
+						<HoaxFeed />
+					</div>
+				</div>
+			
+			</div>
 	);
 };
 
