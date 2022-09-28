@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getHoaxes } from '../api/apiCalls';
+import { getHoaxes, getOldHoaxes } from '../api/apiCalls';
 import {useTranslation} from 'react-i18next';
 import HoaxView from './HoaxView';
 import {useApiProgress} from '../shared/ApiProgress';
@@ -12,13 +12,23 @@ const HoaxFeed = () => {
     const [hoaxPage,setHoaxPage] = useState({content:[],last:true,number : 0});
 
     const path = username ? `/api/0.0.1/users/${username}/hoaxes?page=` : `/api/0.0.1/hoaxes?page=`
-    const pendingApiCall = useApiProgress("get",path);
+    const initialHoaxLoadProgress = useApiProgress("get",path);
+
+    let lastHoaxId = 0;
+    
+    if(hoaxPage.content.length > 0){
+        const lastHoaxIndex = hoaxPage.content.length -1 ;
+        lastHoaxId = hoaxPage.content[lastHoaxIndex].id;
+    }
+    
+    const oldHoaxPath = username ? `/api/0.0.1/users/${username}/hoaxes/${lastHoaxId}` : `/api/0.0.1/hoaxes/${lastHoaxId}`;
+    const loadOldHoaxProgress = useApiProgress("get",oldHoaxPath,true);
 
     useEffect( () => {
         loadHoaxes();
     },[]);
 
-    const { content,last,number } = hoaxPage;
+    const { content,last } = hoaxPage;
 
    
 
@@ -36,15 +46,30 @@ const HoaxFeed = () => {
     }
 
     const onClickHandler = () => {
-        loadHoaxes(number+1);
+        loadOldHoaxes();
     } 
+
+    const loadOldHoaxes = async () => {
+   
+        
+        try {
+            const response = await getOldHoaxes(lastHoaxId,username);
+            setHoaxPage(previousHoaxPage => ({
+                ...response.data,
+                content:[...previousHoaxPage.content,...response.data.content]
+            })); // Geçmiş bilgileri almak için
+        }catch(error){
+            console.error(error);
+        }
+
+    }
 
    
 
     if(content.length === 0){
         return (
             <div className = "alert alert-secondary text-center">
-                {pendingApiCall ?  <Spinner /> : t('There are no hoaxes')}
+                {initialHoaxLoadProgress ?  <Spinner /> : t('There are no hoaxes')}
             </div>
         )
     }
@@ -54,7 +79,7 @@ const HoaxFeed = () => {
                 return <HoaxView key={hoax.id} hoax={hoax} />
             })}
             {!last && 
-                pendingApiCall ?
+                loadOldHoaxProgress ?
                 (
                     <div className = "alert alert-secondary text-center mt-1" > 
                         <Spinner />
