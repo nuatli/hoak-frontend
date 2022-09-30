@@ -63,3 +63,17 @@ export const getOldHoaxes = (id,username) => {
 	const path = username ? `/api/0.0.1/users/${username}/hoaxes/${id}` : `/api/0.0.1/hoaxes/${id}`;
 	return axios.get(path);
 }
+
+export const getNewHoaxesCount = (id,username) => {
+	const path = username ? `/api/0.0.1/users/${username}/hoaxes/${id}?count=true` : `/api/0.0.1/hoaxes/${id}?count=true`;
+	return axios.get(path);
+}
+
+export const getNewHoaxes = (id,username) => {
+	const path = username ? `/api/0.0.1/users/${username}/hoaxes/${id}?direction=after` : `/api/0.0.1/hoaxes/${id}?direction=after`;
+	return axios.get(path);
+}
+
+export const postHoaxAttachment = attachment => {
+	return axios.post(`/api/0.0.1/hoax-attachments`,attachment);
+}
