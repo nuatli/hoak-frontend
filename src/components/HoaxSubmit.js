@@ -6,6 +6,7 @@ import { postHoax, postHoaxAttachment } from '../api/apiCalls';
 import {useApiProgress} from '../shared/ApiProgress';
 import ButtonWithProgress from './ButtonWithProgress';
 import Input from './Input';
+import AutoUploadImage from './AutoUploadImage';
 
 const HoaxSubmit = () => {
     const { t }  = useTranslation();
@@ -75,7 +76,8 @@ const HoaxSubmit = () => {
         setErrors({});
     },[hoax]);
 
-    const pendingApiCall = useApiProgress("post","/api/0.0.1/hoaxes");
+    const pendingApiCall = useApiProgress("post","/api/0.0.1/hoaxes",true);
+    const pendingFileUpload = useApiProgress("post","/api/0.0.1/hoax-attachments",true);
 
     let textAreaClass = 'form-control';
     if(errors.content){
@@ -98,11 +100,11 @@ const HoaxSubmit = () => {
                 <div className="invalid-feedback text-center">{errors.content}</div>
                 {focused && (
                     <>
-                        <Input type="file" onChange={onChangeFile} />
-                        {newImage && <img className="img-thumbnail" src={newImage} alt="hoax-attachment" />}
+                        {!newImage &&  <Input type="file" onChange={onChangeFile} /> }
+                        {newImage && <AutoUploadImage image={newImage} uploading = {pendingFileUpload} />}
                         <div className="text-center mt-2 d-flex justify-content-center">                            
-                                <ButtonWithProgress onClick={onClickSubmitHandler} disabled={pendingApiCall} text={t('Submit')} pendingApiCall={pendingApiCall} className="btn btn-primary"/>
-                                <button className="btn btn-dark d-inline-flex ml-2" onClick={onClickCancelHandler} disabled={pendingApiCall} >
+                                <ButtonWithProgress onClick={onClickSubmitHandler} disabled={pendingApiCall || pendingFileUpload} text={t('Submit')} pendingApiCall={pendingApiCall} className="btn btn-primary"/>
+                                <button className="btn btn-dark d-inline-flex ml-2" onClick={onClickCancelHandler} disabled={pendingApiCall || pendingFileUpload }>
                                     <i className="material-icons mr-2">cancel</i>{t('Cancel')}
                                 </button>
                         
