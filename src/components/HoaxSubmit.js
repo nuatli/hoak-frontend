@@ -16,6 +16,7 @@ const HoaxSubmit = () => {
     const [hoax,setHoax] = useState('');
     const [errors,setErrors] =useState({});
     const [newImage,setNewImage] = useState();
+    const [attachmentId,setAttachmentId] = useState();
 
     
     const onChangeHandler = (event) => {
@@ -28,8 +29,9 @@ const HoaxSubmit = () => {
 
     const onClickSubmitHandler = async () => {
         const body = {
-            content:hoax
-        }
+            content:hoax,
+            attachmentId:attachmentId
+        };
 
         try {
             await postHoax(body);
@@ -59,6 +61,7 @@ const HoaxSubmit = () => {
         attachment.append('file',file);      
         try{
             const response = await postHoaxAttachment(attachment);
+            setAttachmentId(response.data.id);
         }catch(error){
             console.error(error);
         }
