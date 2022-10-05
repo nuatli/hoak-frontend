@@ -99,7 +99,6 @@ const ProfileCard = (props) => {
 	const pendingApiCall = useApiProgress("put",`/api/0.0.1/users/${username}`);
 	const {displayName : displayNameError,image:imageError} = validationErrors
 
-
 	return (
 		<div className="card text-center">
 			<div className="card-header">

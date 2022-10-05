@@ -8,7 +8,7 @@ import {format} from 'timeago.js';
 const HoaxView = (props) => {
     const {i18n} = useTranslation();
     const {hoax} =props;
-    const {user,content,timestamp} = hoax;
+    const {user,content,timestamp,fileAttachment} = hoax;
     const {username,displayName,image} = user;
     const formatted = format(timestamp,i18n.language);
     return(
@@ -23,9 +23,21 @@ const HoaxView = (props) => {
                     </Link>
                 </div>
             </div>
-            <div className="pl-5">
-             {content}
-            </div> 
+            <div className="pl-5">{content}</div> 
+            {fileAttachment && 
+                <div className="pl-5 pr-5">
+                    {
+                        fileAttachment.fileType.startsWith('image') && (
+                            <img className="img-fluid" src={'images/attachments/'+fileAttachment.name} alt={content} />
+                        )                     
+                    }
+                    {
+                        !fileAttachment.fileType.startsWith('image') && (
+                            <strong>Hoax has not supported attachment</strong>
+                        )                     
+                    }                    
+                </div>
+            }
 
         </div>
     )
