@@ -106,6 +106,13 @@ const HoaxFeed = () => {
         }
     }
 
+    const onDeleteHoaxSuccess = id => {
+        setHoaxPage(previousHoaxPage => ({
+            ...previousHoaxPage,
+            content:previousHoaxPage.content.filter( hoax => hoax.id !== id)                
+          }))         
+    }
+
    
 
     if(content.length === 0){
@@ -123,7 +130,7 @@ const HoaxFeed = () => {
                     </div>
             }
             {content.map(hoax => {
-                return <HoaxView key={hoax.id} hoax={hoax} />
+                return <HoaxView key={hoax.id} hoax={hoax} onDeleteHoax={onDeleteHoaxSuccess} />
             })}
             {!last && 
                 loadOldHoaxProgress ?

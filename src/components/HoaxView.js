@@ -1,16 +1,26 @@
 import React, { useEffect,useState } from 'react';
-import { getHoaxes } from '../api/apiCalls';
+import { getHoaxes, deleteHoax } from '../api/apiCalls';
+import {useSelector} from 'react-redux'; 
 import {useTranslation} from 'react-i18next';
 import ProfileImageWithDefault from './ProfileImageWithDefault';
 import {Link} from 'react-router-dom';
 import {format} from 'timeago.js';
 
 const HoaxView = (props) => {
+    const loggedInUserUserName = useSelector(store => store.authReducer.username);
     const {i18n} = useTranslation();
-    const {hoax} =props;
-    const {user,content,timestamp,fileAttachment} = hoax;
+    const {hoax,onDeleteHoax} =props;
+    const {user,content,timestamp,fileAttachment,id} = hoax;
     const {username,displayName,image} = user;
     const formatted = format(timestamp,i18n.language);
+    const ownedByLoggedInUser = loggedInUserUserName === username;
+
+    const onClickHandler = async() => {
+        await deleteHoax(id);
+        onDeleteHoax(id);
+    }
+
+
     return(
         <div className="card p-1 m-1">
             <div className="d-flex">
@@ -22,6 +32,12 @@ const HoaxView = (props) => {
                         <span>{formatted}</span>
                     </Link>
                 </div>
+                {
+                    ownedByLoggedInUser && (
+                        <button className="btn btn-delete-link btn-sm" onClick={onClickHandler}>
+                            <i className="material-icons">delete_outline</i>                        
+                        </button>)
+                } 
             </div>
             <div className="pl-5">{content}</div> 
             {fileAttachment && 
