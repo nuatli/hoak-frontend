@@ -81,3 +81,7 @@ export const postHoaxAttachment = attachment => {
 export const deleteHoax = id => {
 	return axios.delete(`/api/0.0.1/hoaxes/${id}`);
 }
+
+export const deleteUser = username => {
+	return axios.delete(`/api/0.0.1/users/${username}`);
+}

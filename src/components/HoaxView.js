@@ -22,10 +22,6 @@ const HoaxView = (props) => {
     const ownedByLoggedInUser = loggedInUserUserName === username;
 
     const onClickHandler = () => {
-       /*
-        await deleteHoax(id);
-        onDeleteHoax(id);
-        */
        setModalVisible(true);
     }
 
@@ -84,6 +80,7 @@ const HoaxView = (props) => {
                         <div>{content}</div>
                     </div>
                 }
+                title={t('Delete Hoax')}
                 onClickConfirm = {onClickDeleteHandler}
                 pendingApiCall = {pendingApiCall}
             />

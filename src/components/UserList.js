@@ -20,7 +20,9 @@ const UserList = () => {
 	},[]) //componentDidMount,componentDidUpdate
 
 	const  onClickNext = () => {
+		console.log(page.number)
 		const nextPage = page.number + 1;
+		console.log(nextPage)
 		loadUsers(nextPage);
 	}
 
@@ -32,7 +34,8 @@ const UserList = () => {
 	const loadUsers = async page => {
 		setLoadFailure(false);
 		try {	
-			const response = await getUsers(page);
+			const response = await /*getUsers*/getUsersWithPage(page);
+			console.log(response.data)
 			setPage(response.data);
 		}catch(error){
 			setLoadFailure(true);
