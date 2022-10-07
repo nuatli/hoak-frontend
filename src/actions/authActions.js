@@ -21,8 +21,11 @@ export const updateSuccessAction = data => {
 export function loginHandler(credentials){
 	return async function(dispatch){
 		const response = await login(credentials);
-		const authState = {...response.data,password:credentials.password};
-		console.log(authState)
+		const authState = {
+			...response.data.user,
+			password:credentials.password,
+			token:response.data.token
+		};
 		dispatch(loginSuccessAction(authState));
 		return response;
 	}

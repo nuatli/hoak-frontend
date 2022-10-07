@@ -10,7 +10,7 @@ export const changeLanguage = language =>{
 };
 
 export const login = creds => {
-	return axios.post('/api/0.0.1/auth',{},{auth:creds});
+	return axios.post('/api/0.0.1/auth',creds);
 	//return axios.post('/api/0.0.1/auth',{});
 };
 
@@ -23,10 +23,9 @@ export const getUsersWithPage = (page = 0,size=10)  =>{
 	return axios.get(`/api/0.0.1/usersWithPage?page=${page}&size=${size}`);
 } 
 
-export const setAuthorizationHeader = ({username,password,isLoggedIn}) => {
-	//console.log("isloggedIn : ",isLoggedIn)
+export const setAuthorizationHeader = ({isLoggedIn,token}) => {
 	if(isLoggedIn){
-		const authorizationHeaderValue = `Basic ${btoa(username+':'+password)}` ;
+		const authorizationHeaderValue = `Bearer ${token}` ;
 		axios.defaults.headers['Authorization'] = authorizationHeaderValue;
 	}else{
 		delete axios.defaults.headers['Authorization'];
