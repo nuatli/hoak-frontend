@@ -1,10 +1,17 @@
-import {login,signup} from '../api/apiCalls';
+import {login,signup,logout} from '../api/apiCalls';
 
 
 export const logoutSuccess = () => {
-	return{
-		type:'logout-success'
-	};
+	return async function(dispatch){
+		try{
+			const response = await logout();
+		}catch(error){
+			
+		}
+		dispatch({
+			type:'logout-success'
+		})
+	}
 }
 
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";

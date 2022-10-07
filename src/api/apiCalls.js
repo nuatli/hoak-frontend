@@ -14,6 +14,10 @@ export const login = creds => {
 	//return axios.post('/api/0.0.1/auth',{});
 };
 
+export const logout = () => {
+	return axios.post('/api/0.0.1/logout');
+};
+
 export const getUsers = ()  =>{
 	//return axios.get('/api/0.0.1/users');
 	return axios.get('/api/0.0.1/usersWithPage');
